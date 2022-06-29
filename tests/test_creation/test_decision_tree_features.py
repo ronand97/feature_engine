@@ -9,7 +9,7 @@ def test_get_feature_names_out(df_creation):
     # output_features is None
     transformer = DecisionTreeFeatures(
         variables=["Age", "Marks", "Avg_5k_run_minutes", "Height_cm"],
-        output_features=None,
+        strategy=None,
         regression=True,
         max_depth=3,
         drop_original=False
@@ -38,7 +38,7 @@ def test_get_feature_names_out(df_creation):
     # output_features is an integer
     transformer = DecisionTreeFeatures(
         variables=["Age", "Marks", "Avg_5k_run_minutes", "Height_cm"],
-        output_features=3,
+        strategy=3,
         regression=True,
         max_depth=3,
         drop_original=False
@@ -66,7 +66,7 @@ def test_get_feature_names_out(df_creation):
     # output_features is a list of integers
     transformer = DecisionTreeFeatures(
         variables=["Age", "Marks", "Avg_5k_run_minutes", "Height_cm"],
-        output_features=[1, 3],
+        strategy=[1, 3],
         regression=True,
         max_depth=3,
         drop_original=False
@@ -88,7 +88,7 @@ def test_get_feature_names_out(df_creation):
     # output_features
     transformer = DecisionTreeFeatures(
         variables=["Age", "Marks", "Avg_5k_run_minutes", "Height_cm"],
-        output_features=(
+        strategy=(
             "Height_cm",
             ("Avg_5k_run_minutes", "Height_cm"),
             "Age",
@@ -119,7 +119,7 @@ def test_get_unique_values_from_output_features():
 
     transformer = DecisionTreeFeatures(
         variables=["Age", "Marks", "Avg_5k_run_minutes", "Height_cm", "Plays_Football"],
-        output_features=output_features,
+        strategy=output_features,
         regression=False,
         max_depth=3,
         drop_original=False
@@ -155,7 +155,7 @@ def test_error_when_output_features_not_permitted(_output_features):
     with pytest.raises(ValueError):
         transformer = DecisionTreeFeatures(
             variables=["Age", "Marks", "Avg_5k_run_minutes", "Height_cm"],
-            output_features=_output_features,
+            strategy=_output_features,
             regression=True,
             max_depth=3,
             drop_original=True
