@@ -9,7 +9,7 @@ from feature_engine.creation import (
     CombineWithReferenceFeature,
     CyclicalTransformer,
     MathematicalCombination,
-    DecisionTreeCreation,
+    DecisionTreeFeatures,
 )
 from tests.estimator_checks.estimator_checks import check_feature_engine_estimator
 
@@ -19,11 +19,11 @@ _estimators = [
         variables=["0", "1"], reference=["0"], func=["add"], missing_values="ignore"
     ),
     CyclicalFeatures(),
+    DecisionTreeFeatures(),
     # FIXME: remove in version 1.4
     MathematicalCombination(variables_to_combine=["0", "1"]),
     CombineWithReferenceFeature(variables_to_combine=["0"], reference_variables=["1"]),
     CyclicalTransformer(),
-    DecisionTreeCreation(),
 ]
 
 
@@ -36,6 +36,7 @@ _estimators = [
     MathFeatures(variables=["var_1", "var_2", "var_3"], func="mean"),
     RelativeFeatures(variables=["var_1", "var_2"], reference=["var_3"], func=["add"]),
     CyclicalFeatures(),
+    DecisionTreeFeatures(),
 ]
 
 
