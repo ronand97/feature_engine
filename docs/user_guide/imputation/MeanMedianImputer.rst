@@ -5,19 +5,23 @@
 MeanMedianImputer
 =================
 
-The MeanMedianImputer() is a univariate/single imputation algorithm for pandas DataFrames to replace missing data with either:
+Introduction
+------------
 
-- The mean average of the data
-- The median average of the data
+Mean and Median Imputation replaces missing data in numerical variables with the mean or median of the variable. This is a simple technique commonly used in feature engineering and data preprocessing in machine learning. For example, this technique is often used when training linear regression or logistic regression models.
+The mean is the mean average of the data, calculated by adding all the values and dividing by the number of observations. The median is the middle value of the data when it is ordered in ascending or descending order. If the number of observations is even, the median is typically the average of the two middle values.
 
-And can be used over multiple columns at once without repeated method calls either by specifying a list of column names or letting the imputer automatically select all numerical variables in the data. Note: this imputation method only works on numerical data. The implementation mimics the standard scikit-learn pattern of learning the data first using .fit() and performing the imputation operation using .transform(). Data, with imputed values of the mean or median, is commonly used in data science and machine learning to train linear regression and logistic regression models. As this is a simple technique, other imputation techniques may be more suitable for complex data (discussed further below).
 
-Choosing imputation type
-------------------------
+Choosing Mean or Median Imputation
+----------------------------------
 
+Typically:
+- Mean imputation is used when the data is normally distributed (not skewed)
+- Median imputation is used when the data is skewed
+
+This is because mean imputation can be sensitive to outliers when the underlying distribution is skewed. In this scenario the median can be a better representation of the average as the median is less prone to outliers.
 In a symmetric/normal distribution the mean and median are identical.
 
-However, mean imputation can be sensitive to outliers when the underlying distribution is skewed. In this scenario the median can be a better representation of the average as the median is less prone to outliers.
 
 Here is an example image showing this, taken from Wikipedia. The image links
 to the use license.
@@ -33,7 +37,7 @@ In this example:
 
 It is clear the median is a better estimate of the central tendency of the skewed data.
 
-Considerations when using MeanMedianImputer
+Advantages and limitations when using Mean or Median Imputation
 -------------------------------------------
 
 Both mean and median imputation are popular methods to handle missing numerical data because they are:
@@ -42,10 +46,27 @@ Both mean and median imputation are popular methods to handle missing numerical 
 - Easy to implement
 - Quick to apply to large datasets
 
-Things to consider before using mean imputation or median imputation:
+However there are some limitiations to be aware of when using these methods:
 
-- Both methods assume the missing data is missing completely at random (MCAR). However, sometimes data is not missing at random due to relationships between other variables in the dataset which is not captured by these methods (MNAR - Missing Not Completely At Random). Hence these methods can introduce bias to the dataset. Other imputation methods might be more appropriate if the missing data is related to other other variables in the dataset, for example `sckit-learn's multiple imputation method IterativeImputer <https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html>`.
+- Both methods assume the missing data is missing completely at random (MCAR). However, sometimes data is not missing at random (MNAR) due to relationships between other variables in the dataset which is not captured by these methods. Hence these methods can introduce bias to the dataset. 
 - Both methods can reduce the variance in a dataset since the replaced values represent the central tendency of the data.
+
+Other imputation methods might be more appropriate if the missing data is related to other other variables in the dataset, for example `sckit-learn's multiple imputation method IterativeImputer <https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html>`.
+
+
+MeanMedianImputer Transformer from Feature-engine
+------------------------------------------------
+
+The MeanMedianImputer() is a univariate/single imputation algorithm for pandas DataFrames to replace missing data with either:
+
+- The mean average of the data
+- The median average of the data
+
+And has the following features:
+- Can be used over multiple columns at once without repeated method calls either by specifying a list of column names or letting the imputer automatically select all numerical variables in the data
+- Only works on numerical data
+- Implementation mimics the standard scikit-learn pattern of learning the data first using .fit() and performing the imputation operation using .transform()
+
 
 Example usage
 -------------
